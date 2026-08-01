@@ -1,0 +1,12 @@
+# Netlify / Cloudflare Pages headers file.
+# (Ignored by Vercel and GitHub Pages — configure those per their own docs.)
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  # --- Optional CSP (uncomment to enable). MUST keep blob: and voice.cashflohero.ai,
+  #     or the voice demo's AudioWorklet will fail with "Unable to load a worklet's module".
+  # Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://voice.cashflohero.ai blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://api.fontshare.com; font-src 'self' https://cdn.fontshare.com; connect-src 'self' https://voice.cashflohero.ai wss://voice.cashflohero.ai https://api.fontshare.com; img-src 'self' data:; base-uri 'self'
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
