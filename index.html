@@ -132,13 +132,19 @@ h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:-.022em;
   border-bottom:1px solid var(--line);
 }
 .head-in{max-width:var(--maxw);margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:20px}
-.lockup{display:flex;align-items:center;gap:12px;font-family:var(--font-display);font-weight:600}
-.logo-flo{display:flex;align-items:center;gap:7px;font-size:21px;letter-spacing:-.02em}
-.logo-mark{width:24px;height:24px}
-.logo-flo b{color:var(--violet);font-weight:600}
-.lockup .x{color:var(--muted-2);font-size:15px;font-weight:500}
-.logo-ne{font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--ink-soft);
-  padding:5px 11px;border:1px solid var(--line);border-radius:8px;background:var(--white)}
+.lockup{display:flex;align-items:center;gap:16px;font-family:var(--font-display);font-weight:600}
+.logo-flo{display:flex;align-items:center;gap:8px;font-size:22px;letter-spacing:-.03em}
+.logo-mark-img{width:27px;height:27px;display:block}
+.logo-flo .wordmark{font-weight:700;color:var(--ink)}
+.logo-flo .wordmark b{color:var(--violet);font-weight:700}
+.lockup .x{color:var(--muted-2);font-size:14px;font-weight:500}
+/* Next Element lockup (reproduced from brand logo) */
+.logo-ne{display:flex;align-items:center;gap:9px}
+.ne-mark{width:27px;height:27px;flex:none}
+.ne-text{display:flex;flex-direction:column;line-height:1;gap:3px}
+.ne-name{font-family:var(--font-display);font-weight:700;font-size:15px;letter-spacing:.01em;color:#4a4a4a}
+.ne-name b{color:#c8102e;font-weight:700}
+.ne-sub{font-family:var(--font-mono);font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2)}
 .head .spacer{flex:1}
 .head-ctas{display:flex;align-items:center;gap:10px}
 .head-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-display);
@@ -500,11 +506,23 @@ h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:-.022em;
   <div class="head-in">
     <div class="lockup">
       <span class="logo-flo">
-        <svg class="logo-mark" viewBox="0 0 24 24" fill="none"><path d="M3 5.5 13.5 2 21 8.5 10.5 12 3 5.5Z" fill="url(#lg1)"/><path d="M10.5 12 21 8.5 15 20 10.5 12Z" fill="url(#lg2)"/><defs><linearGradient id="lg1" x1="3" y1="2" x2="21" y2="12" gradientUnits="userSpaceOnUse"><stop stop-color="#38bdf8"/><stop offset="1" stop-color="#7c3bed"/></linearGradient><linearGradient id="lg2" x1="10" y1="8" x2="21" y2="20" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3bed"/><stop offset="1" stop-color="#4c1d95"/></linearGradient></defs></svg>
-        <span>flo<b>biz</b></span>
+        <img class="logo-mark-img" src="flobiz-mark.png" alt="Flobiz" width="27" height="27" />
+        <span class="wordmark">flo<b>biz</b></span>
       </span>
       <span class="x">×</span>
-      <span class="logo-ne">NEXT ELEMENT</span>
+      <span class="logo-ne">
+        <svg class="ne-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <path d="M7 7 H20" stroke="#c8102e" stroke-width="3.6" stroke-linecap="square"/>
+          <path d="M7 7 V33 H33 V20" stroke="#c8102e" stroke-width="3.6" stroke-linecap="square"/>
+          <rect x="12.5" y="19.5" width="9" height="9" fill="#c8102e"/>
+          <path d="M22.5 17.5 L33.5 6.5" stroke="#c8102e" stroke-width="3.6" stroke-linecap="round"/>
+          <path d="M26.5 6.5 H33.5 V13.5" stroke="#c8102e" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="ne-text">
+          <span class="ne-name"><b>NEXT</b>ELEMENT</span>
+          <span class="ne-sub">Marketing Management</span>
+        </span>
+      </span>
     </div>
     <div class="spacer"></div>
     <div class="head-ctas">
@@ -741,7 +759,7 @@ h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:-.022em;
       </div>
       <div class="pcard reveal">
         <div class="brand">
-          <span class="logo-flo" style="font-size:22px"><svg class="logo-mark" viewBox="0 0 24 24" fill="none"><path d="M3 5.5 13.5 2 21 8.5 10.5 12 3 5.5Z" fill="url(#lg1)"/><path d="M10.5 12 21 8.5 15 20 10.5 12Z" fill="url(#lg2)"/></svg><span class="nm">flo<b>biz</b></span></span>
+          <span class="logo-flo" style="font-size:22px"><img class="logo-mark-img" src="flobiz-mark.png" alt="Flobiz" width="30" height="30" /><span class="nm">flo<b>biz</b></span></span>
         </div>
         <ul>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>1 Crore+ users · myBillBook, mySandesh, myCashflo</li>

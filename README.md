@@ -9,7 +9,7 @@ Live target: **https://nextelement.flobiz.in**
 
 ## What this is (and isn't)
 
-- **One static HTML file** (`index.html`). No backend, no build step, no database.
+- **A static HTML page** (`index.html`) plus one logo asset (`flobiz-mark.png`). No backend, no build step, no database.
 - Everything dynamic happens **in the visitor's browser**:
   - **Voice demo** → the browser connects directly to `wss://voice.cashflohero.ai` via the
     Flo/cashflohero embed SDK (loaded from `https://voice.cashflohero.ai/sdk/voice-agent-sdk.js`).
