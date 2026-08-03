@@ -1,0 +1,110 @@
+name: Deploy Frontend
+
+on:
+  push:
+    branches: [staging, main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-frontend-${{ github.ref_name }}
+  cancel-in-progress: true
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy-frontend:
+    name: "deploy → S3 (${{ github.ref_name }})"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate branch
+        run: |
+          BRANCH="${{ github.ref_name }}"
+          if [[ "$BRANCH" != "main" && "$BRANCH" != "staging" ]]; then
+            echo "::error::This workflow only runs on 'staging' or 'main'. Got: $BRANCH"
+            exit 1
+          fi
+
+      - name: Set environment
+        id: env
+        run: |
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            echo "name=production" >> "$GITHUB_OUTPUT"
+            echo "bucket=mbb-nextelement-flobiz-prod" >> "$GITHUB_OUTPUT"
+            echo "role_arn=${{ vars.MBB_BUILD_ROLE_ARN_PRODUCTION }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=staging" >> "$GITHUB_OUTPUT"
+            echo "bucket=mbb-nextelement-flobiz-staging" >> "$GITHUB_OUTPUT"
+            echo "role_arn=${{ vars.MBB_BUILD_ROLE_ARN_STAGING }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Configure AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ steps.env.outputs.role_arn }}
+          aws-region: ap-south-1
+
+      - name: Ensure S3 bucket exists
+        env:
+          BUCKET: ${{ steps.env.outputs.bucket }}
+        run: |
+          set -euo pipefail
+
+          if aws s3api head-bucket --bucket "$BUCKET" --region ap-south-1 2>/dev/null; then
+            echo "Bucket exists: $BUCKET"
+          else
+            echo "Creating bucket: $BUCKET"
+            aws s3api create-bucket \
+              --bucket "$BUCKET" \
+              --region ap-south-1 \
+              --create-bucket-configuration LocationConstraint=ap-south-1
+            echo "Bucket created"
+          fi
+
+          echo "Configuring bucket for public static hosting..."
+          aws s3api put-public-access-block \
+            --bucket "$BUCKET" \
+            --public-access-block-configuration "BlockPublicAcls=false,IgnorePublicAcls=false,BlockPublicPolicy=false,RestrictPublicBuckets=false"
+
+          POLICY="{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":\"*\",\"Action\":\"s3:GetObject\",\"Resource\":\"arn:aws:s3:::${BUCKET}/*\"}]}"
+          aws s3api put-bucket-policy --bucket "$BUCKET" --policy "$POLICY"
+
+          aws s3 website "s3://${BUCKET}/" \
+            --index-document index.html \
+            --error-document index.html
+
+          echo "Bucket configured for static hosting"
+
+      - name: Deploy to S3
+        env:
+          BUCKET: ${{ steps.env.outputs.bucket }}
+        run: |
+          set -euo pipefail
+          # Plain static site — no build step. Sync the repo root, excluding
+          # version control and platform-specific meta files that aren't site content.
+          aws s3 sync . "s3://${BUCKET}/" \
+            --delete \
+            --region ap-south-1 \
+            --exclude ".git/*" \
+            --exclude ".github/*" \
+            --exclude ".gitignore" \
+            --exclude "README.md" \
+            --exclude "CNAME" \
+            --exclude "_headers"
+
+      - name: Print URL
+        env:
+          BUCKET: ${{ steps.env.outputs.bucket }}
+          ENV_NAME: ${{ steps.env.outputs.name }}
+        run: |
+          URL="http://${BUCKET}.s3-website.ap-south-1.amazonaws.com"
+          printf "### Frontend Deployed to S3\n| | |\n|---|---|\n" >> "$GITHUB_STEP_SUMMARY"
+          printf "| **Environment** | \`%s\` |\n" "${ENV_NAME}" >> "$GITHUB_STEP_SUMMARY"
+          printf "| **Bucket** | \`%s\` |\n" "${BUCKET}" >> "$GITHUB_STEP_SUMMARY"
+          printf "| **URL** | %s |\n" "${URL}" >> "$GITHUB_STEP_SUMMARY"
+          printf "| **Commit** | \`%s\` |\n" "${GITHUB_SHA}" >> "$GITHUB_STEP_SUMMARY"
