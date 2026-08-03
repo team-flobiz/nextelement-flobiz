@@ -88,7 +88,7 @@ img{max-width:100%;display:block}
 .eyebrow::before{content:"";width:20px;height:1.5px;background:var(--grad)}
 
 h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:-.035em;line-height:1.02;color:var(--ink)}
-.h2{font-size:clamp(30px,4.7vw,54px);margin-bottom:20px}
+.h2{font-size:clamp(30px,4.7vw,54px);margin-bottom:20px;text-wrap:balance}
 .lead{font-size:clamp(17px,2vw,20px);color:var(--muted);max-width:56ch;line-height:1.55}
 .dark .lead{color:var(--muted)}
 .violet-word{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
@@ -234,9 +234,9 @@ a.logo-flo:hover{opacity:.72}
 .demo-alt-cap{color:var(--muted-2);font-size:14px;font-family:var(--font-mono);letter-spacing:.02em}
 
 /* ============ THE LEAK ============ */
-.leak-top{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:end;margin-bottom:52px}
-@media(max-width:860px){.leak-top{grid-template-columns:1fr;gap:22px;align-items:start}}
-.leak-hero-num{font-family:var(--font-display);font-weight:600;letter-spacing:-.035em;line-height:1.02;font-size:clamp(30px,4.4vw,50px)}
+.leak-top{margin-bottom:52px}
+.leak-top .leak-sub{margin-top:22px}
+.leak-hero-num{font-family:var(--font-display);font-weight:600;letter-spacing:-.035em;line-height:1.02;font-size:clamp(30px,4.4vw,50px);text-wrap:balance}
 .leak-hero-num .dead{color:var(--loss)}
 .leak-sub{color:var(--muted);font-size:18px;max-width:40ch}
 .leak-sub b{color:var(--loss);font-weight:600}
@@ -519,7 +519,7 @@ a.logo-flo:hover{opacity:.72}
         <div class="leak-hero-num">AED 15,000 on Meta ads.<br>200 leads. <span class="dead">14 booked.</span></div>
       </div>
       <div class="reveal">
-        <p class="leak-sub">The other <b>186</b>? Dead. At AED 75 a lead, that's <b>AED 14,000</b> — gone every month.</p>
+        <p class="leak-sub">The other <b>186?</b> Dead. At AED 75 a lead, that's <b>AED 14,000</b> — gone every month.</p>
       </div>
     </div>
 
