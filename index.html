@@ -134,6 +134,8 @@ h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:-.022em;
 .head-in{max-width:var(--maxw);margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:20px}
 .lockup{display:flex;align-items:center;gap:16px;font-family:var(--font-display);font-weight:600}
 .logo-flo{display:flex;align-items:center;gap:8px;font-size:22px;letter-spacing:-.03em}
+a.logo-flo{transition:opacity .15s}
+a.logo-flo:hover{opacity:.72}
 .logo-mark-img{width:27px;height:27px;display:block}
 .logo-flo .wordmark{font-weight:700;color:var(--ink)}
 .logo-flo .wordmark b{color:var(--violet);font-weight:700}
@@ -505,10 +507,10 @@ h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:-.022em;
 <header class="head">
   <div class="head-in">
     <div class="lockup">
-      <span class="logo-flo">
+      <a class="logo-flo" href="https://flobiz.in" target="_blank" rel="noopener" aria-label="Flobiz — flobiz.in">
         <img class="logo-mark-img" src="flobiz-mark.png" alt="Flobiz" width="27" height="27" />
         <span class="wordmark">flo<b>biz</b></span>
-      </span>
+      </a>
       <span class="x">×</span>
       <span class="logo-ne">
         <svg class="ne-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
